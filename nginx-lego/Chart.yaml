@@ -1,7 +1,4 @@
 name: nginx-lego
 version: 0.2.1
 description: Chart for nginx-ingress-controller and kube-lego
-sources:
-- https://github.com/kubernetes/contrib/tree/master/ingress/controllers/nginx
-- https://github.com/jetstack/kube-lego/tree/master/examples/nginx
 engine: gotpl
