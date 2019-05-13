@@ -1,19 +1,15 @@
 version: 2
 jobs:
   dockerbuild:
-    machine: true
+    docker:
+      - image: "node:12.2.0-alpine"
     steps:
-      - checkout
-      - run:
-          name: install aws
-          command: |
-            curl "https://s3.amazonaws.com/aws-cli/awscli-bundle.zip" -o "awscli-bundle.zip"
-            unzip awscli-bundle.zip
-            sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
-            echo $CIRCLE_COMPARE_URL
-            echo $CIRCLE_SHA1
-            DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
-            echo $DIR
+    - checkout
+    - run:
+        name: test
+        command: |
+        DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
+        echo $DIR
 
 workflows:
   version: 2
