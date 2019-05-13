@@ -13,19 +13,7 @@ This chart creates a single [Factorio Headless](https://www.factorio.com/downloa
 
 ## Provider-specific Prerequisites
 
-Amazon's Elastic Loadbalancer lacks support for UDP. You'll need to set `factorioServer.ServiceType` to `NodePort` and expose the port that gets selected (see `kubectl describe svc <servicename>`) via a security group. You may need to do something similar for certain bare metal deployments.
-
-You need not worry about this on Google Cloud Platform.
-
-## Installing the Chart
-
-To install the chart with the release name `my-release`:
-
-```bash
-$ helm install --name my-release stable/factorio
-```
-
-This command deploys a Factorio dedicated server with sane defaults.
+Amazon's Elastic Loadbalancer lacks support for UDP. You'll need to set `factorioServer.ServiceType` to `NodePort` and expose the port that gets selected (see `kubectl describe svc <servicactorio dedicated server with sane defaults.
 
 > **Tip**: List all releases using `helm list`
 

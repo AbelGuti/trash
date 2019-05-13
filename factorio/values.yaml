@@ -9,23 +9,6 @@ resources:
   requests:
     memory: 512Mi
     cpu: 500m
-
-# Most of these map to environment variables. See docker-factorio for details:
-# https://github.com/games-on-k8s/docker-factorio/blob/master/README.md#environment-variable-reference
-factorioServer:
-  name: Kubernetes Server
-  description: Factorio running on Kubernetes
-  port: 34197
-  # Lock this server down with a password.
-  #password: change.me
-  maxPlayers: 255
-  # Publishes this server in the server browser if true.
-  # You'll want to set Factorio.User below if true, as it becomes required.
-  isPublic: false
-  verifyIdentity: false
-  # Allows or disallows console commands. Must be one of: `true`, `false`, or `admins-only`.
-  allowCommands: admins-only
-  # Pause the server when nobody is connected?
   noAutoPause: "false"
   # You'll want to change this to NodePort if you are on AWS.
   serviceType: LoadBalancer

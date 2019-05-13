@@ -6,5 +6,3 @@ icon: https://www.consul.io/assets/images/logo_large-475cebb0.png
 sources:
   - https://github.com/kelseyhightower/consul-on-kubernetes
 maintainers:
-  - name: Lachlan Evenson
-    email: lachlan@deis.com

@@ -9,5 +9,3 @@ icon: https://us1.factorio.com/assets/img/factorio-logo.png
 sources:
 - https://github.com/games-on-k8s/docker-factorio
 maintainers:
-- name: Greg Taylor
-  email: gtaylor@gc-taylor.com
