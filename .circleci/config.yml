@@ -12,6 +12,8 @@ jobs:
             sudo ./awscli-bundle/install -i /usr/local/aws -b /usr/local/bin/aws
             echo $CIRCLE_COMPARE_URL
             echo $CIRCLE_SHA1
+            DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
+            echo $DIR
 
 workflows:
   version: 2
