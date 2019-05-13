@@ -8,8 +8,8 @@ jobs:
     - run:
         name: test
         command: |
-        DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
-        echo $DIR
+          DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
+          echo $DIR
 
 workflows:
   version: 2
