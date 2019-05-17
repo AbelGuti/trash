@@ -26,3 +26,4 @@ spec:
           serviceName: {{ template "fullname" . }}
           servicePort: 80
 {{- end -}}
+sadsads
