@@ -16,5 +16,4 @@ workflows:
   version: 2
   buil&push-dev:
     jobs:
-      - terraform:
-          context: '*'
+      - terraform
