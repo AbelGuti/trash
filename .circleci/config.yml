@@ -8,13 +8,12 @@ jobs:
     - run:
         name: test
         command: |
-          ls
-          apk add git
-          DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
-          echo $DIR
+          echo $TT
 
 workflows:
   version: 2
   buil&push-dev:
     jobs:
-      - dockerbuild
+      - dockerbuild:
+          context: '*'
+
