@@ -8,7 +8,7 @@ jobs:
     - run:
         name: Terraform Install
         command: |
-          wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip \
+          wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
           echo $TT
 
