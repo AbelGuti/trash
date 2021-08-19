@@ -1,20 +1,20 @@
 version: 2
 jobs:
-  dockerbuild:
+  terraform:
     docker:
-      - image: "node:12.2.0-alpine"
+      - image: "alpine:3.14.1"
     steps:
     - checkout
     - run:
-        name: test
+        name: Terraform Install
         command: |
-          ls
-          apk add git
-          DIR=$(git diff-tree --no-commit-id --name-only -r HEAD)
-          echo $DIR
+          wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip \
+          unzip terraform_0.15.1_linux_amd64.zip -d /bin
+          echo $TT
 
 workflows:
   version: 2
   buil&push-dev:
     jobs:
-      - dockerbuild
+      - terraform:
+          context: '*'
