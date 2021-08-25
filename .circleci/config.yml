@@ -66,6 +66,7 @@ jobs:
         name: Terraform Apply
         command: |
           cd << parameters.project_path >>
+          pwd
           ls -la
           ls .terraform/
           for i in $(echo $ACCOUNTS | sed "s/,/ /g")
