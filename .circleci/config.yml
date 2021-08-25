@@ -19,7 +19,7 @@ parameters:
     type: boolean
     default: false
 jobs:
-  terraform-init:
+  terraform-release:
     docker:
       - image: "alpine:3.14.1"
     parameters:
@@ -37,52 +37,26 @@ jobs:
         name: Terraform Init
         command: |
           cd << parameters.project_path >>
-          for i in $(echo $ACCOUNTS | sed "s/,/ /g")
-          do
-              echo "$i"
-              ls
+          echo $ACCOUNTS | jq -r 'keys[]' | while read i; do
+              WORKSPACE=$i
+              ACCOUNT=$(echo $ACCOUNTS | jq -r ".$i.accountId")
+              echo "The workspace is $WORKSPACE"
+              echo "The account id is $ACCOUNT"
           done
           mkdir -p .terraform/
           touch .terraform/test-<< parameters.project_path >>
-    - save_cache:
-        key: terraform-state
-        paths:
-          - .terraform/
-  terraform-apply:
-    docker:
-      - image: "alpine:3.14.1"
-    parameters:
-      project_path:
-        type: string
-    steps:
-    - checkout
     - run:
-        name: Terraform Install
+        name: Terraform Init
         command: |
-          apk add jq
-          wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
-          unzip terraform_0.15.1_linux_amd64.zip -d /bin
-    - restore_cache:
-        keys: terraform-state
-    - run:
-        name: Terraform Apply
-        command: |
+          ls
           pwd
-          ls -la
-          ls .terraform/
-          cd << parameters.project_path >>
-          for i in $(echo $ACCOUNTS | sed "s/,/ /g")
-          do
-              echo "$i"
-              ls
-          done
 workflows:
   application:
     jobs:
-      - terraform-init:
+      - terraform-release:
           name: terrorm-init-application
           project_path: chaoskube
-      - terraform-apply:
+      - terraform-release:
           name: terrorm-init-main
           project_path: chaoskube
           requires:
