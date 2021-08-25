@@ -1,8 +1,30 @@
-version: 2
+version: 2.1
+parameters:
+  application:
+    type: boolean
+    default: false
+  bastion:
+    type: boolean
+    default: false
+  database:
+    type: boolean
+    default: false
+  main:
+    type: boolean
+    default: false
+  network:
+    type: boolean
+    default: false
+  secrets:
+    type: boolean
+    default: false
 jobs:
-  terraform:
+  terraform-init:
     docker:
       - image: "alpine:3.14.1"
+    parameters:
+      project_path:
+        type: string
     steps:
     - checkout
     - run:
@@ -10,10 +32,45 @@ jobs:
         command: |
           wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
-          echo $TT
-
+    - run:
+        name: Terraform init
+        command: |
+          cd << parameters.project_path >>
+          for i in $(echo $ACCOUNTS | sed "s/,/ /g")
+          do
+              echo "$i"
+              ls
+          done
+  terraform-apply:
+    docker:
+      - image: "alpine:3.14.1"
+    parameters:
+      project_path:
+        type: string
+    steps:
+    - checkout
+    - run:
+        name: Terraform Install
+        command: |
+          wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
+          unzip terraform_0.15.1_linux_amd64.zip -d /bin
+    - run:
+        name: Terraform apply
+        command: |
+          cd << parameters.project_path >>
+          for i in $(echo $ACCOUNTS | sed "s/,/ /g")
+          do
+              echo "$i"
+              ls
+          done
 workflows:
-  version: 2
-  buil&push-dev:
+  application:
     jobs:
-      - terraform
+      - terraform-init:
+          name: terrorm-init-application
+          project_path: chaoskube
+      - terraform-init:
+          name: terrorm-init-main
+          project_path: minio
+          requires:
+            - terrorm-init-application
