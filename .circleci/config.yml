@@ -33,7 +33,7 @@ jobs:
           wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
     - run:
-        name: Terraform init
+        name: Terraform Init
         command: |
           cd << parameters.project_path >>
           for i in $(echo $ACCOUNTS | sed "s/,/ /g")
@@ -41,6 +41,11 @@ jobs:
               echo "$i"
               ls
           done
+          mkdir -p /tmp/core_dumps
+          touch /tmp/core_dumps/test
+    - store_artifacts:
+        path: /tmp/core_dumps
+        destination: terraform-state
   terraform-apply:
     docker:
       - image: "alpine:3.14.1"
@@ -55,9 +60,10 @@ jobs:
           wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
     - run:
-        name: Terraform apply
+        name: Terraform Apply
         command: |
           cd << parameters.project_path >>
+          ls /tmp
           for i in $(echo $ACCOUNTS | sed "s/,/ /g")
           do
               echo "$i"
@@ -69,8 +75,8 @@ workflows:
       - terraform-init:
           name: terrorm-init-application
           project_path: chaoskube
-      - terraform-init:
+      - terraform-apply:
           name: terrorm-init-main
-          project_path: minio
+          project_path: chaoskube
           requires:
             - terrorm-init-application
