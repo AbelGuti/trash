@@ -30,6 +30,7 @@ jobs:
     - run:
         name: Terraform Install
         command: |
+          apk add jq
           wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
     - run:
@@ -42,7 +43,7 @@ jobs:
               ls
           done
           mkdir -p .terraform/
-          touch .terraform/test
+          touch .terraform/test-<< parameters.project_path >>
     - save_cache:
         key: terraform-state
         paths:
@@ -58,6 +59,7 @@ jobs:
     - run:
         name: Terraform Install
         command: |
+          apk add jq
           wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
     - restore_cache:
@@ -65,10 +67,10 @@ jobs:
     - run:
         name: Terraform Apply
         command: |
-          cd << parameters.project_path >>
           pwd
           ls -la
           ls .terraform/
+          cd << parameters.project_path >>
           for i in $(echo $ACCOUNTS | sed "s/,/ /g")
           do
               echo "$i"
