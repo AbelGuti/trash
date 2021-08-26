@@ -43,8 +43,8 @@ jobs:
               echo "The workspace is $WORKSPACE"
               echo "The account id is $ACCOUNT"
           done
-          mkdir -p .terraform/
-          touch .terraform/test-<< parameters.project_path >>
+          mkdir -p terraform/
+          touch terraform/test-<< parameters.project_path >>
     - run:
         name: Terraform Init
         command: |
