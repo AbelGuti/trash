@@ -34,30 +34,15 @@ jobs:
           wget https://releases.hashicorp.com/terraform/0.15.1/terraform_0.15.1_linux_amd64.zip
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
     - run:
-        name: Terraform Init
+        name: Terraform Init - Apply
+        shell: /bin/sh
         command: |
-          cd << parameters.project_path >>
-          echo $ACCOUNTS | jq -r 'keys[]' | while read i; do
-              WORKSPACE=$i
-              ACCOUNT=$(echo $ACCOUNTS | jq -r ".$i.accountId")
-              echo "The workspace is $WORKSPACE"
-              echo "The account id is $ACCOUNT"
-          done
-          mkdir -p terraform/
-          touch terraform/test-<< parameters.project_path >>
-    - run:
-        name: Terraform Init
-        command: |
-          ls
-          pwd
+          echo hello
+          hello
+
 workflows:
   application:
     jobs:
       - terraform-release:
-          name: terrorm-init-application
-          project_path: chaoskube
-      - terraform-release:
-          name: terrorm-init-main
-          project_path: chaoskube
-          requires:
-            - terrorm-init-application
+          name: terrorm-network
+          project_path: network
