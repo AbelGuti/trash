@@ -38,7 +38,7 @@ jobs:
         shell: /bin/sh
         command: |
           echo hello
-          hello
+          hello || true
 
 workflows:
   application:
