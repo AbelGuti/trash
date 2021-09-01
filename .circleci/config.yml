@@ -35,7 +35,6 @@ jobs:
           unzip terraform_0.15.1_linux_amd64.zip -d /bin
     - run:
         name: Terraform Init - Apply
-        shell: /bin/sh
         command: |
           echo hello
           hello || true
